@@ -47,6 +47,40 @@ const calculateNetProfitMargin = (
   return (totalRevenue - totalExpenses) / totalRevenue;
 };
 
+const calculateWorkingCapitalRatio = (records: Record[]): number => {
+  let assets = 0;
+  let liabilities = 0;
+
+  const assetsAccountTypes = ['current', 'bank', 'current_accounts_receivable'];
+  const liabilitiesAccountTypes = ['current', 'current_accounts_payable'];
+
+  records.map((record) => {
+    if (
+      record.account_category === 'assets' &&
+      assetsAccountTypes.includes(record.account_type)
+    ) {
+      if (record.value_type === 'debit') {
+        assets += record.total_value;
+      } else {
+        assets -= record.total_value;
+      }
+    }
+
+    if (
+      record.account_category === 'liability' &&
+      liabilitiesAccountTypes.includes(record.account_type)
+    ) {
+      if (record.value_type === 'credit') {
+        liabilities += record.total_value;
+      } else {
+        liabilities -= record.total_value;
+      }
+    }
+  });
+
+  return assets / liabilities;
+};
+
 const main = () => {
   console.log('index.js');
   // console.log(records);
@@ -61,11 +95,14 @@ const main = () => {
     totalRevenue,
     totalExpenses
   );
+  const totalWorkingCapitalRatio: number =
+    calculateWorkingCapitalRatio(records);
 
   console.log(`Total Revenue: ${totalRevenue}`);
   console.log(`Total Expenses: ${totalExpenses}`);
   console.log(`Total Gross Profit Margin: ${totalGrossProfitMargin}`);
   console.log(`Total Net Profit Margin: ${totalNetProfitMargin}`);
+  console.log(`Total Working Capital Ratio: ${totalWorkingCapitalRatio}`);
 };
 
 main();
