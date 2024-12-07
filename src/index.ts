@@ -12,6 +12,12 @@ interface Record {
 const generalLedgerData = JSON.parse(fs.readFileSync('./data.json', 'utf-8'));
 const records: Record[] = generalLedgerData.data;
 
+const formatCurrency = (value: number): String => {
+  let formattedValue: number | String = Math.floor(value);
+  formattedValue = formattedValue.toLocaleString('en-US');
+  return '$' + formattedValue;
+};
+
 const calculateRevenue = (records: Record[]): number => {
   let revenue: number = 0;
   records.map((record) => {
@@ -98,8 +104,8 @@ const main = () => {
   const totalWorkingCapitalRatio: number =
     calculateWorkingCapitalRatio(records);
 
-  console.log(`Total Revenue: ${totalRevenue}`);
-  console.log(`Total Expenses: ${totalExpenses}`);
+  console.log(`Total Revenue: ${formatCurrency(totalRevenue)}`);
+  console.log(`Total Expenses: ${formatCurrency(totalExpenses)}`);
   console.log(`Total Gross Profit Margin: ${totalGrossProfitMargin}`);
   console.log(`Total Net Profit Margin: ${totalNetProfitMargin}`);
   console.log(`Total Working Capital Ratio: ${totalWorkingCapitalRatio}`);
