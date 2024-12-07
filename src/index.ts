@@ -18,6 +18,11 @@ const formatCurrency = (value: number): String => {
   return '$' + formattedValue;
 };
 
+function formatPercentage(value: number): string {
+  const percentageValue = value * 100;
+  return percentageValue.toFixed(1) + '%';
+}
+
 const calculateRevenue = (records: Record[]): number => {
   let revenue: number = 0;
   records.map((record) => {
@@ -88,9 +93,7 @@ const calculateWorkingCapitalRatio = (records: Record[]): number => {
 };
 
 const main = () => {
-  console.log('index.js');
-  // console.log(records);
-
+  console.log('Calculating General Ledger Data...');
   const totalRevenue: number = calculateRevenue(records);
   const totalExpenses: number = calculateExpenses(records);
   const totalGrossProfitMargin: number = calculateGrossProfitMargin(
@@ -106,9 +109,15 @@ const main = () => {
 
   console.log(`Total Revenue: ${formatCurrency(totalRevenue)}`);
   console.log(`Total Expenses: ${formatCurrency(totalExpenses)}`);
-  console.log(`Total Gross Profit Margin: ${totalGrossProfitMargin}`);
-  console.log(`Total Net Profit Margin: ${totalNetProfitMargin}`);
-  console.log(`Total Working Capital Ratio: ${totalWorkingCapitalRatio}`);
+  console.log(
+    `Total Gross Profit Margin: ${formatPercentage(totalGrossProfitMargin)}`
+  );
+  console.log(
+    `Total Net Profit Margin: ${formatPercentage(totalNetProfitMargin)}`
+  );
+  console.log(
+    `Total Working Capital Ratio: ${formatPercentage(totalWorkingCapitalRatio)}`
+  );
 };
 
 main();
