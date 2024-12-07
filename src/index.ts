@@ -40,9 +40,16 @@ const calculateGrossProfitMargin = (
   return sales / revenue;
 };
 
+const calculateNetProfitMargin = (
+  totalRevenue: number,
+  totalExpenses: number
+): number => {
+  return (totalRevenue - totalExpenses) / totalRevenue;
+};
+
 const main = () => {
   console.log('index.js');
-  console.log(records);
+  // console.log(records);
 
   const totalRevenue: number = calculateRevenue(records);
   const totalExpenses: number = calculateExpenses(records);
@@ -50,10 +57,15 @@ const main = () => {
     records,
     totalRevenue
   );
+  const totalNetProfitMargin: number = calculateNetProfitMargin(
+    totalRevenue,
+    totalExpenses
+  );
 
   console.log(`Total Revenue: ${totalRevenue}`);
   console.log(`Total Expenses: ${totalExpenses}`);
   console.log(`Total Gross Profit Margin: ${totalGrossProfitMargin}`);
+  console.log(`Total Net Profit Margin: ${totalNetProfitMargin}`);
 };
 
 main();
