@@ -20,13 +20,23 @@ const calculateRevenue = (records: Record[]) => {
   return revenue;
 };
 
+const calculateExpenses = (records: Record[]) => {
+  let expenses = 0;
+  records.map((record) => {
+    if (record.account_category === 'expense') expenses += record.total_value;
+  });
+  return expenses;
+};
+
 const main = () => {
   console.log('index.js');
   console.log(records);
 
   const totalRevenue = calculateRevenue(records);
+  const totalExpenses = calculateExpenses(records);
 
   console.log(`Total Revenue: ${totalRevenue}`);
+  console.log(`Total Revenue: ${totalExpenses}`);
 };
 
 main();
