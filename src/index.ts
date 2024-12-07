@@ -107,16 +107,14 @@ const main = () => {
   const totalWorkingCapitalRatio: number =
     calculateWorkingCapitalRatio(records);
 
-  console.log(`Total Revenue: ${formatCurrency(totalRevenue)}`);
-  console.log(`Total Expenses: ${formatCurrency(totalExpenses)}`);
+  console.log(`Revenue: ${formatCurrency(totalRevenue)}`);
+  console.log(`Expenses: ${formatCurrency(totalExpenses)}`);
   console.log(
-    `Total Gross Profit Margin: ${formatPercentage(totalGrossProfitMargin)}`
+    `Gross Profit Margin: ${formatPercentage(totalGrossProfitMargin)}`
   );
+  console.log(`Net Profit Margin: ${formatPercentage(totalNetProfitMargin)}`);
   console.log(
-    `Total Net Profit Margin: ${formatPercentage(totalNetProfitMargin)}`
-  );
-  console.log(
-    `Total Working Capital Ratio: ${formatPercentage(totalWorkingCapitalRatio)}`
+    `Working Capital Ratio: ${formatPercentage(totalWorkingCapitalRatio)}`
   );
 };
 
