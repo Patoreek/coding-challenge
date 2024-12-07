@@ -12,31 +12,48 @@ interface Record {
 const generalLedgerData = JSON.parse(fs.readFileSync('./data.json', 'utf-8'));
 const records: Record[] = generalLedgerData.data;
 
-const calculateRevenue = (records: Record[]) => {
-  let revenue = 0;
+const calculateRevenue = (records: Record[]): number => {
+  let revenue: number = 0;
   records.map((record) => {
     if (record.account_category === 'revenue') revenue += record.total_value;
   });
   return revenue;
 };
 
-const calculateExpenses = (records: Record[]) => {
-  let expenses = 0;
+const calculateExpenses = (records: Record[]): number => {
+  let expenses: number = 0;
   records.map((record) => {
     if (record.account_category === 'expense') expenses += record.total_value;
   });
   return expenses;
 };
 
+const calculateGrossProfitMargin = (
+  records: Record[],
+  revenue: number
+): number => {
+  let sales: number = 0;
+  records.map((record) => {
+    if (record.account_type === 'sales' && record.value_type === 'debit')
+      sales += record.total_value;
+  });
+  return sales / revenue;
+};
+
 const main = () => {
   console.log('index.js');
   console.log(records);
 
-  const totalRevenue = calculateRevenue(records);
-  const totalExpenses = calculateExpenses(records);
+  const totalRevenue: number = calculateRevenue(records);
+  const totalExpenses: number = calculateExpenses(records);
+  const totalGrossProfitMargin: number = calculateGrossProfitMargin(
+    records,
+    totalRevenue
+  );
 
   console.log(`Total Revenue: ${totalRevenue}`);
-  console.log(`Total Revenue: ${totalExpenses}`);
+  console.log(`Total Expenses: ${totalExpenses}`);
+  console.log(`Total Gross Profit Margin: ${totalGrossProfitMargin}`);
 };
 
 main();
